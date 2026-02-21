@@ -2,51 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\setores;
-use Illuminate\Http\Request;
+use App\Models\Setores;
+use App\Http\Requests\StoreSetorRequest;
+use App\Http\Requests\UpdateSetorRequest;
 
-class setoresController extends Controller
+class SetoresController extends Controller
 {
-
     public function index()
     {
-        return setores::all();
+        return Setores::all();
     }
 
-
-    public function store(Request $request)
+    public function store(StoreSetorRequest $request)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
+        $setor = Setores::create($request->validated());
 
-        ]);
-
-        $setores = setores::create($validated);
-
-        return response()->json($setores, 201);
+        return response()->json($setor, 201);
     }
 
-
-    public function update(Request $request, $id)
+    public function update(UpdateSetorRequest $request, $id)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
+        $setor = Setores::findOrFail($id);
+        $setor->update($request->validated());
 
-        ]);
-
-
-        $setores = setores::findOrFail($id);
-        $setores->update($validated);
-
-        return response()->json($setores);
+        return response()->json($setor);
     }
-
 
     public function destroy($id)
     {
-        $setores = setores::findOrFail($id);
-        $setores->delete();
+        $setor = Setores::findOrFail($id);
+        $setor->delete();
 
-        return response()->json(['message' => 'Setor excluído com sucesso']);
+        return response()->json([
+            'message' => 'Setor excluído com sucesso'
+        ]);
     }
 }
