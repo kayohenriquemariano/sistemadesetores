@@ -17,10 +17,14 @@ async function carregarSetores() {
 }
 
 async function salvar() {
+    const id = document.getElementById('id').value;
     const nome = document.getElementById('nome').value;
 
-    const res = await fetch('/api/setores', {
-        method: 'POST',
+    const url = id ? `/api/setores/${id}` : '/api/setores';
+    const metodo = id ? 'PUT' : 'POST';
+
+    const res = await fetch(url, {
+        method: metodo,
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
@@ -31,14 +35,17 @@ async function salvar() {
     const data = await res.json();
 
     if (!res.ok) {
-        alert(data.message); // 👈 ALERTA AQUI
+        alert(data.message);
         return;
     }
 
+    alert(id ? 'Setor atualizado!' : 'Setor cadastrado!');
+    document.getElementById('id').value = '';
+    document.getElementById('nome').value = '';
     carregarSetores();
 }
 
-function editar(id, nome) {
+function editar(id, nome){
     document.getElementById('id').value = id;
     document.getElementById('nome').value = nome;
 }

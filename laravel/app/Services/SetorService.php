@@ -3,35 +3,45 @@
 namespace App\Services;
 
 use App\Models\Setores;
+use App\Interfaces\SetorServiceInterface;
 
-class SetorService
+class SetorService implements SetorServiceInterface
 {
-    public function list()
+    private $setor;
+
+
+    public function __construct(Setores $setor)
     {
-        return Setores::all();
+        $this->setor = $setor;
     }
 
-    public function store(array $given)
-    {
-            
-        if (Setores::where('nome', $given['nome'])->exists()) {
-            throw new \Exception('Setor já existe');
-        }
 
-        return Setores::create($given);
+    public function listar()
+    {
+        return $this->setor->orderBy('id','desc')->get();
     }
 
-    public function update(array $given, $id)
+
+    public function store(array $dados)
     {
-        $setor = Setores::findOrFail($id);
-        $setor->update($given);
+        return $this->setor->create($dados);
+    }
+
+
+    public function update(array $dados, $id)
+    {
+        $setor = $this->setor->findOrFail($id);
+        $setor->update($dados);
 
         return $setor;
     }
 
+
     public function destroy($id)
     {
-        $setor = Setores::findOrFail($id);
+        $setor = $this->setor->findOrFail($id);
         $setor->delete();
+
+        return true;
     }
 }

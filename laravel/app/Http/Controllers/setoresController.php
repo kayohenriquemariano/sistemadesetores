@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\SetorService;
-use App\Http\Requests\StoreSetorRequest;
-use App\Http\Requests\UpdateSetorRequest;
+use App\Http\Requests\SetorRequest;
 
 class SetoresController extends Controller
 {
@@ -17,24 +16,16 @@ class SetoresController extends Controller
 
     public function index()
     {
-        return response()->json($this->setorService->list());
+        return response()->json($this->setorService->listar());
     }
 
-    public function store(StoreSetorRequest $request)
-{
-    try {
+    public function store(SetorRequest $request)
+    {
         $setor = $this->setorService->store($request->validated());
-
         return response()->json($setor, 201);
-        //$e captura a exceção lançada pelo serviço e retorna uma resposta JSON com a mensagem de erro e o status HTTP 422 (Unprocessable Entity).
-    } catch (\Exception $e) {
-        return response()->json([
-            'message' => $e->getMessage()
-        ], 422);
     }
-}
 
-    public function update(UpdateSetorRequest $request, $id)
+    public function update(SetorRequest $request, $id)
     {
         $setor = $this->setorService->update($request->validated(), $id);
         return response()->json($setor);

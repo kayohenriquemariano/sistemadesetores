@@ -3,17 +3,23 @@
 <head>
     <title>Cadastro de Setores</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
+
 <body>
 
-<h2>Cadastrar / Editar Setor</h2>
+<div class="container">
 
-<input type="hidden" id="id">
-<input type="text" id="nome" placeholder="Nome do setor">
-<button onclick="salvar()">Salvar</button>
+    <h2>Cadastrar / Editar Setor</h2>
 
-<h2>Lista de Setores</h2>
-<ul id="lista"></ul>
+    <input type="hidden" id="id">
+    <input type="text" id="nome" placeholder="Nome do setor">
+    <button onclick="salvar()">Salvar</button>
+
+    <h2>Lista de Setores</h2>
+    <ul id="lista"></ul>
+
+</div>
 
 <script src="{{ asset('js/conexao.js') }}"></script>
 </body>
