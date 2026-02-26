@@ -17,14 +17,10 @@ async function carregarSetores() {
 }
 
 async function salvar() {
-    const id = document.getElementById('id').value;
     const nome = document.getElementById('nome').value;
 
-    const url = id ? `/api/setores/${id}` : '/api/setores';
-    const metodo = id ? 'PUT' : 'POST';
-
-    await fetch(url, {
-        method: metodo,
+    const res = await fetch('/api/setores', {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
@@ -32,8 +28,12 @@ async function salvar() {
         body: JSON.stringify({ nome })
     });
 
-    document.getElementById('id').value = '';
-    document.getElementById('nome').value = '';
+    const data = await res.json();
+
+    if (!res.ok) {
+        alert(data.message); // 👈 ALERTA AQUI
+        return;
+    }
 
     carregarSetores();
 }

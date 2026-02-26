@@ -173,3 +173,13 @@ CRUD completo
 Página dinâmica
 
 Atualização em tempo real
+
+📌 Validação de Setores Duplicados
+
+Para garantir a integridade dos dados do sistema, foi implementado um mecanismo que impede o cadastro de setores com nomes repetidos.
+
+Quando o usuário tenta cadastrar um setor, o sistema verifica se já existe um registro com o mesmo nome no banco de dados.
+Caso exista, o cadastro não é realizado e uma mensagem é exibida na tela informando que o setor já está cadastrado.
+
+Essa validação é feita na camada de regra de negócio, garantindo que o sistema permaneça organizado e que os dados armazenados sejam consistentes.
+Além disso, o usuário recebe um feedback imediato, melhorando a experiência de uso da aplicação.
